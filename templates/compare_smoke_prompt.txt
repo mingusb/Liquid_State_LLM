@@ -1,0 +1,2 @@
+Create exactly one user artifact file named `RESULT.txt` containing one sentence that confirms this run executed.
+Do not add external dependencies.

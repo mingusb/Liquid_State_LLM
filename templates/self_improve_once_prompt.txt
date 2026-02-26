@@ -1,0 +1,24 @@
+Improve this rubric-driven development toolkit itself.
+
+Context:
+- A baseline snapshot is available in `current_project/`.
+- The goal is to produce a candidate project revision in `candidate_project/`.
+
+Required deliverables:
+1. Create drop-in candidate files under `candidate_project/`:
+   - `candidate_project/scripts/emit_agents_md.py`
+   - `candidate_project/scripts/rbd_run.sh`
+   - `candidate_project/scripts/rbd_compare.sh` (only if needed)
+   - `candidate_project/README.md` (updated if behavior changes)
+2. Keep existing CLIs backward compatible unless a strong reason is documented.
+3. Add concrete quality improvements for nested rubric development, including:
+   - clearer rubric-dimension visibility and sanity checks,
+   - visual/perceptual scoring coverage using image evidence and `view_image` when vision policy enables it,
+   - clean support for enabling/disabling vision separately in project execution and judging,
+   - stronger anti-gaming validation rules that reduce false pass conditions,
+   - better run-level reproducibility metadata.
+4. Add `candidate_project/CHANGELOG.md` summarizing improvements and risks.
+5. Add `candidate_project/TEST_PLAN.md` with exact commands for verification.
+
+Acceptance expectation:
+- Candidate outputs should be plausible to outperform baseline on artifact/process quality.

@@ -1,0 +1,4 @@
+Create a minimal artifact in this project:
+1. Write `HELLO.md` with a short project summary.
+2. Write `CHECKLIST.md` with 3 acceptance checks.
+3. Keep everything self-contained, no external dependencies.

@@ -1,0 +1,15 @@
+Build a small, production-quality command-line project in this run directory.
+
+Project request:
+1. Implement a Python CLI named `task_notes` that can:
+   - add a note
+   - list notes
+   - delete a note by id
+2. Persist data in a local JSON file.
+3. Include tests that cover core behavior and one error path.
+4. Include a concise `README.md` with usage examples.
+5. Keep the code simple, readable, and maintainable.
+
+Expected artifact style:
+- Source code repository contents (code + tests + docs).
+- Clear evidence that the project works.

@@ -1,0 +1,16 @@
+Build a small static website artifact in this run directory.
+
+Project request:
+1. Create `index.html` and `styles.css` for a polished one-page launch page.
+2. The page must include:
+   - a hero section,
+   - a three-card features section,
+   - a call-to-action section,
+   - responsive behavior for mobile and desktop.
+3. Keep implementation dependency-free (plain HTML/CSS only).
+4. Include a concise `README.md` with run/view instructions.
+5. Include a visual quality checklist in `VISUAL_CHECKLIST.md`.
+
+Expected artifact style:
+- Website source files plus documentation.
+- Clear visual polish and readability.

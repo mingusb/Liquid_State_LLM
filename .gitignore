@@ -1,0 +1,20 @@
+# Runtime outputs and experiments
+runs/
+eval/
+iterations/
+collateral/
+scorecards/
+swarm_outputs/
+
+# Local run pointers/state
+.latest_depth5_run_name
+.run_guard_name
+.tmp_low_run_name
+
+# Logs and caches
+*.log
+*.tmp
+*.swp
+__pycache__/
+*.pyc
+.DS_Store
