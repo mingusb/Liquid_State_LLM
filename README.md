@@ -176,3 +176,152 @@ Primary diagnostics:
 - `bash`
 - `python3`
 - `codex` in `PATH`
+
+## Dashboard (Latest Snapshot)
+
+Rendered from `scorecards/LSM_DASHBOARD.md`.
+
+```text
+# LSM Dashboard (Narrow)
+
+- run: `depth5_codex_low_restart_20260226T015701Z`
+- epochs: `19`
+- final_phase: `reservoir_perturbation`
+- stable: `no`
+
+Legend (fixed-width):
++-----------+----------+--------------------+------------------+-------------------+------------+
+| TOKEN     | KIND     | D1                 | D2               | D3                | D4         |
++-----------+----------+--------------------+------------------+-------------------+------------+
+| [S][D][M] | cell     | chain code triplet |                  |                   |            |
+| S         | phase    | 3 = edge           | 4 = train        | 5 = reconv        | 6 = stable |
+| D         | decision | A = accept         | P = prov         | R = reject        |            |
+| M         | marker   | * = perfect        | ! = block        | x = prompt-miss   | . = other  |
+| MG        | merged   | link selected      | this epoch       |                   |            |
+| AFT       | merged   | merged-link        | after score      |                   |            |
+| Δ         | merged   | merged-link        | delta            | (after-baseline)  |            |
+| B         | merged   | merged-link        | blocking defects |                   |            |
+| D         | merged   | merged-link        | total defects    |                   |            |
+| EX        | example  | 5A* = ideal        | 4P! = blocked    | 4Px = prompt-miss |            |
++-----------+----------+--------------------+------------------+-------------------+------------+
+
+## Unified LSM Table
+
++--------------+------+------+------+------+------+-----+-----+-----+---+---+
+| ROW          | 5>4  | 4>3  | 3>2  | 2>1  | 1>0  | MG  | AFT | Δ   | B | D |
++--------------+------+------+------+------+------+-----+-----+-----+---+---+
+| E01          | 3P!  | 3P!  | 3P!  | 4P!  | 4Px  | 5>4 | 88  | +14 | 1 | 2 |
+| E02          | ...  | 4P!  | 3P!  | 5P*  | 4P!  | 4>3 | 88  | +26 | 1 | 1 |
+| E03          | ...  | ...  | 5P!  | 4P!  | 3P!  | 3>2 | 92  | +24 | 1 | 1 |
+| E04          | ...  | ...  | ...  | 4P!  | 5P.  | 2>1 | 91  | +19 | 1 | 1 |
+| E05          | ...  | ...  | ...  | ...  | 3P!  | 1>0 | 96  | +34 | 1 | 1 |
+| E06          | 5P!  | 5A*  | 5A*  | 5P*  | 6A*  | 5>4 | 91  | +19 | 1 | 3 |
+| E07          | ...  | 5P!  | 3R!  | 5P!  | 5P!  | 4>3 | 91  | +19 | 1 | 1 |
+| E08          | ...  | ...  | 3P!  | 3P!  | 4P!  | 3>2 | 91  | +17 | 1 | 1 |
+| E09          | ...  | ...  | ...  | 5P!  | 3P!  | 2>1 | 93  | +22 | 1 | 1 |
+| E10          | ...  | ...  | ...  | ...  | 3P!  | 1>0 | 96  | +24 | 1 | 1 |
+| E11          | 5P.  | 5P.  | 4P!  | 5P.  | 5A*  | 5>4 | 96  | +14 | 0 | 2 |
+| E12          | ...  | 5P.  | 4P!  | 5P!  | 3P!  | 4>3 | 93  | +19 | 0 | 1 |
+| E13          | ...  | ...  | 5P!  | 4P!  | 5P!  | 3>2 | 92  | +18 | 1 | 2 |
+| E14          | ...  | ...  | ...  | 3P.  | 5A*  | 2>1 | 89  | +17 | 0 | 2 |
+| E15          | ...  | ...  | ...  | ...  | 5P!  | 1>0 | 96  | +25 | 1 | 1 |
+| E16          | 5A*  | 4P.  | 5P.  | 4P!  | 6A*  | 5>4 | 100 | +14 | 0 | 0 |
+| E17          | ...  | 3P!  | 4P!  | 3P!  | 5A*  | 4>3 | 94  | +22 | 1 | 1 |
+| E18          | ...  | ...  | 4P!  | 5P!  | 3P!  | 3>2 | 84  | +12 | 1 | 2 |
+| E19          | ...  | ...  | ...  | 4P!  | 4Px  | 2>1 | 90  | +17 | 1 | 1 |
+| Σ_AVG_AFTER  | 93.8 | 93.2 | 90.6 | 91.9 | 96.0 | -   | -   | -   | - | - |
+| Σ_PERFECT    | 1    | 1    | 1    | 2    | 5    | -   | -   | -   | - | - |
+| Σ_BLK_EPOCHS | 2    | 4    | 10   | 12   | 13   | -   | -   | -   | - | - |
+| Σ_PROMPT_NO  | 0    | 0    | 0    | 0    | 2    | -   | -   | -   | - | - |
+| Σ_SEEN       | 4    | 8    | 12   | 16   | 19   | -   | -   | -   | - | - |
++--------------+------+------+------+------+------+-----+-----+-----+---+---+
+```
+
+## Idealized Perfect Depth-5 Rubric (Pretty Print)
+
+```text
++----------+---------------------+-------------------------+----+----+-------+--------+------+
+| Rubric   | Scores              | Target                  | X  | Y  | Cells | Mean   | Gate |
++----------+---------------------+-------------------------+----+----+-------+--------+------+
+| Rubric_5 | Rubric_4            | Meta-meta-meta control  | 16 | 10 | 160   | 100.0% | PASS |
+| Rubric_4 | Rubric_3            | Meta-meta control       | 16 | 12 | 192   | 100.0% | PASS |
+| Rubric_3 | Rubric_2            | Meta control            | 16 | 16 | 256   | 100.0% | PASS |
+| Rubric_2 | Rubric_1            | Rubric-quality control  | 16 | 18 | 288   | 100.0% | PASS |
+| Rubric_1 | Rubric_0            | Rubric adequacy control | 16 | 20 | 320   | 100.0% | PASS |
+| Rubric_0 | Project artifact(s) | Prompt objective output | 16 | 24 | 384   | 100.0% | PASS |
++----------+---------------------+-------------------------+----+----+-------+--------+------+
+
+X-axis roles (shared across Rubric_0..Rubric_5):
++-----+--------------------------------------+
+| ID  | Role                                 |
++-----+--------------------------------------+
+| R0  | Chief Executive Officer              |
+| R1  | Chief Operating Officer              |
+| R2  | Chief Financial Officer              |
+| R3  | Chief Technology Officer             |
+| R4  | Chief Product Officer                |
+| R5  | Head of Engineering                  |
+| R6  | Staff Software Engineer              |
+| R7  | Quality Assurance Lead               |
+| R8  | Site Reliability Engineer            |
+| R9  | Security Engineer                    |
+| R10 | Data and Analytics Lead              |
+| R11 | UX Research and Design Lead          |
+| R12 | Customer Success Lead                |
+| R13 | Technical Documentation Lead         |
+| R14 | Compliance and Risk Officer          |
+| R15 | Independent External Auditor         |
++-----+--------------------------------------+
+
+Perfect-chain hard gate vector:
++---------------------------+---------+
+| Criterion                 | Value   |
++---------------------------+---------+
+| decision                  | ACCEPT  |
+| recheck_mean              | 100.0   |
+| recheck_total_defects     | 0       |
+| recheck_blocking_defects  | 0       |
+| identity_lock             | yes     |
+| prompt_satisfaction       | yes     |
+| contradictions_open       | 0       |
++---------------------------+---------+
+
+Y-axis dimension families by rubric depth:
++----------+----------------------------------------------------------------------------------+
+| Rubric   | Y dimension family set                                                           |
++----------+----------------------------------------------------------------------------------+
+| Rubric_0 | Prompt Coverage; Product Utility; Technical Correctness; Reliability; Security; |
+|          | Privacy; Accessibility; UX Clarity; IA/Content; Performance; Maintainability;   |
+|          | Testability; Auditability; Compliance; Observability; Recovery Quality;          |
+|          | Operability; Cost Efficiency; Traceability; Anti-Gaming Resistance;              |
+|          | Contradiction Handling; Evidence Quality; Outcome Fit; Longevity                 |
+| Rubric_1 | Coverage Adequacy; Dimension Discrimination; Prompt Trace Fidelity; Evidence     |
+|          | Sufficiency; Anti-Gaming Strength; Scoring Anchor Precision; Residual Variance   |
+|          | Capture; Contradiction Resolution Quality; Cell-level Explainability;            |
+|          | Axis Completeness; Axis Independence; Role Balance; Failure Sensitivity;         |
+|          | Regression Detection; Measurement Rigor; Audit Reproducibility;                  |
+|          | Reliability Under Adversarial Inputs; Prompt Drift Resistance;                   |
+|          | Overfit Resistance; Judge Agreement                                               |
+| Rubric_2 | Meta-Rubric Specificity; Remediation Guidance Value; Evaluation Consistency;     |
+|          | Blindspot Detection; Incentive Alignment; Penalty Calibration; Upgrade Path       |
+|          | Clarity; Chain-Coupling Awareness; Stability-Plasticity Balance; Frontier         |
+|          | Discovery Strength; Error Taxonomy Quality; Defect Prioritization Quality;        |
+|          | Evidence Model Robustness; Novelty Capture; Prompt Morphology Response;           |
+|          | Governance Fitness; Recovery Predictiveness; Self-Improvement Utility             |
+| Rubric_3 | Meta^3 Calibration Accuracy; Hierarchy Coherence; Emergent Axis Creativity;      |
+|          | Meta-overfit Controls; Cross-level Contradiction Detection; Convergence           |
+|          | Provability; Dynamical Stability Control; Quality Upper-bound Pressure;           |
+|          | Evaluation Coverage Closure; Strategic Residual Capture; Anti-Gaming              |
+|          | Escalation Integrity; Role-weight Fairness; Decision Boundary Sharpness;          |
+|          | Adaptive Thresholding; Proof-carrying Remediation                                 |
+| Rubric_4 | Meta^4 Legibility; Chain Governance Fitness; Failure-mode Isolation;              |
+|          | Recursion Soundness; Dependency Invalidation Correctness; Reconvergence           |
+|          | Policy Coherence; Goal Alignment Under Drift; Anti-cheating Meta Guards;          |
+|          | Audit Trace Compression; Resource-Efficiency Pressure; Judge Independence          |
+| Rubric_5 | Meta^5 Objective Integrity; Recursion Purpose Preservation;                       |
+|          | System-level Generalization; Catastrophic Shortcut Prevention;                    |
+|          | Convergence Ethics and Safety; Meta-policy Continuity; Stability Warranty;        |
+|          | Multi-run Transfer Robustness; Strategic Tradeoff Governance;                     |
+|          | Final Adjudication Soundness                                                      |
++----------+----------------------------------------------------------------------------------+
+```
